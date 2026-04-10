@@ -12,7 +12,7 @@ connectDB();
 
 const app = express();
 
-// Body parsing middlwares
+// Body Parsing Middlwares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
