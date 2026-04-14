@@ -1,55 +1,118 @@
-import React from 'react'
-import { TrendingUp, Plus } from 'lucide-react'
-
-const movies = [
-  { id: 1, title: 'Inception', genre: 'Sci-Fi', rating: 8.8, image: 'https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?w=800&q=80' },
-  { id: 2, title: 'The Dark Knight', genre: 'Action', rating: 9.0, image: 'https://images.unsplash.com/photo-1547721064-36203661264b?w=800&q=80' },
-  { id: 3, title: 'Interstellar', genre: 'Sci-Fi', rating: 8.7, image: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&q=80' },
-  { id: 4, title: 'Dune: Part Two', genre: 'Sci-Fi', rating: 8.9, image: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&q=80' },
-  { id: 5, title: 'Oppenheimer', genre: 'Biography', rating: 8.4, image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&q=80' },
-  { id: 6, title: 'Avatar', genre: 'Fantasy', rating: 7.9, image: 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=800&q=80' },
-]
+import React, { useState, useEffect } from 'react'
+import { 
+  TrendingUp, 
+  Play, 
+  Star, 
+  Clock, 
+  Film,
+  Users,
+  Eye,
+  Plus,
+  Loader2
+} from 'lucide-react'
+import api from '../services/api'
+import toast from 'react-hot-toast'
 
 const Home = () => {
-  return (
-    <div className="home-page animate-fade-in">
-      <header className="hero glass">
-        <div className="hero-content">
-          <span className="badge">Featured Selection</span>
-          <h1>Experience the Future of <span>Cinema</span></h1>
-          <p>Stream your favorite movies with incredible detail and immersive sound. Your journey into the extraordinary begins here.</p>
-          <div className="hero-actions">
-            <button className="btn-primary">Watch Now</button>
-            <button className="btn-secondary">Learn More</button>
-          </div>
-        </div>
-      </header>
+  const [movies, setMovies] = useState([])
+  const [loading, setLoading] = useState(true)
 
-      <section className="movie-section">
-        <div className="section-header">
-          <TrendingUp size={24} className="icon" />
-          <h2>Trending Now</h2>
-        </div>
-        <div className="movie-grid">
-          {movies.map(movie => (
-            <div key={movie.id} className="movie-card glass">
-              <div className="card-image">
-                <img src={movie.image} alt={movie.title} />
-                <div className="card-overlay">
-                  <button className="btn-icon"><Plus size={20} /></button>
-                </div>
-              </div>
-              <div className="card-info">
-                <h3>{movie.title}</h3>
-                <div className="card-meta">
-                  <span>{movie.genre}</span>
-                  <span className="rating">★ {movie.rating}</span>
-                </div>
-              </div>
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const { data } = await api.get('/movies')
+        // Check if data is an array or if it's wrapped in a status/data object
+        setMovies(Array.isArray(data) ? data : data.data || [])
+      } catch (error) {
+        console.error('Error fetching movies:', error)
+        toast.error('Failed to load movies')
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchMovies()
+  }, [])
+
+  const addToWatchlist = async (movieId) => {
+    try {
+      await api.post('/watchlist', { movieId, status: 'PLANNED' })
+      toast.success('Added to watchlist!')
+    } catch (error) {
+      const message = error.response?.data?.error || 'Failed to add to watchlist'
+      toast.error(message)
+    }
+  }
+
+  const stats = [
+    { label: 'Total Movies', value: movies.length, icon: <Film size={20} />, trend: '+12%', color: '#6366f1' },
+    { label: 'Featured Genres', value: '8', icon: <Star size={20} />, trend: '+5%', color: '#f59e0b' },
+    { label: 'Minutes Watched', value: '18.4k', icon: <Clock size={20} />, trend: '+24%', color: '#22c55e' },
+    { label: 'Community', value: '850', icon: <Users size={20} />, trend: '+8%', color: '#ec4899' },
+  ]
+
+  return (
+    <div className="dashboard-home animate-slide-up">
+      <div className="dashboard-welcome">
+        <h1 className="h1">Dashboard <span>Overview</span></h1>
+        <p className="text-secondary">Welcome back! Here's the latest from the movie database.</p>
+      </div>
+
+      <div className="stats-grid">
+        {stats.map((stat) => (
+          <div key={stat.label} className="stat-card glass-panel">
+            <div className="stat-icon" style={{ backgroundColor: `${stat.color}15`, color: stat.color }}>
+              {stat.icon}
             </div>
-          ))}
-        </div>
-      </section>
+            <div className="stat-details">
+              <p className="stat-label">{stat.label}</p>
+              <h3 className="stat-value">{stat.value}</h3>
+              <span className="stat-trend">{stat.trend} this month</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="dashboard-content-grid">
+        <section className="featured-widget glass-panel">
+          <div className="widget-header">
+            <h2 className="h2">Recently Added</h2>
+          </div>
+          
+          {loading ? (
+            <div className="empty-state">
+              <Loader2 className="animate-spin" size={40} />
+            </div>
+          ) : movies.length > 0 ? (
+            <div className="movie-grid-mini">
+              {movies.slice(0, 4).map(movie => (
+                <div key={movie.id} className="mini-movie-card">
+                  <div className="thumb-container">
+                    <img src={movie.posterUrl || 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=400&q=80'} alt={movie.title} />
+                    <button onClick={() => addToWatchlist(movie.id)} className="add-btn"><Plus size={16} /></button>
+                  </div>
+                  <div className="mini-info">
+                    <p className="mini-title text-sm">{movie.title}</p>
+                    <p className="mini-meta text-xs">{movie.genres?.[0] || 'Unknown'}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="empty-state">
+              <Film size={40} className="text-muted" />
+              <p>No movies available yet.</p>
+            </div>
+          )}
+        </section>
+
+        <section className="activity-widget glass-panel">
+          <div className="widget-header">
+            <h2 className="h2">Quick Add</h2>
+          </div>
+          <p className="text-secondary text-sm mb-4">You can manually add movies to your database from the "Add Movie" portal.</p>
+          <button className="btn-primary w-full">Go to Add Movie</button>
+        </section>
+      </div>
     </div>
   )
 }

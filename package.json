@@ -1,13 +1,11 @@
 {
   "name": "movie-app-root",
   "private": true,
-  "workspaces": [
-    "backend",
-    "Frontend"
-  ],
   "scripts": {
     "dev:backend": "npm run dev --prefix backend",
     "dev:frontend": "npm run dev --prefix Frontend",
-    "install:all": "npm install && npm install --prefix backend && npm install --prefix Frontend"
+    "install:backend": "npm install --prefix backend",
+    "install:frontend": "npm install --prefix Frontend",
+    "install:all": "npm run install:backend && npm run install:frontend"
   }
 }
