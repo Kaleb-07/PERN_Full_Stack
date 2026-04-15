@@ -7,6 +7,7 @@ import movieRoutes from "./routes/movieRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import watchlistRoutes from "./routes/watchlistRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
+import reviewRoutes from "./routes/reviewRoutes.js";
 
 config();
 connectDB();
@@ -22,6 +23,7 @@ app.use("/movies", movieRoutes);
 app.use("/auth", authRoutes);
 app.use("/watchlist", watchlistRoutes);
 app.use("/admin", adminRoutes);
+app.use("/reviews", reviewRoutes);
 
 const server = app.listen(process.env.PORT || 5001, "0.0.0.0", () => {
     console.log(`Server running on PORT ${process.env.PORT}`);

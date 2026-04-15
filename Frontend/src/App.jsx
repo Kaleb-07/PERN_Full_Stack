@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import Watchlist from './pages/Watchlist'
 import Auth from './pages/Auth'
 import Settings from './pages/Settings'
+import MovieDetails from './pages/MovieDetails'
 import BrowseMovies from './pages/BrowseMovies'
 import AddMovie from './pages/AddMovie'
 import AdminDashboard from './pages/AdminDashboard'
@@ -23,6 +24,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/watchlist" element={<Watchlist />} />
+                <Route path="/movie/:id" element={<MovieDetails />} />
                 <Route path="/browse" element={<BrowseMovies />} />
                 <Route path="/add" element={<AdminRoute><AddMovie /></AdminRoute>} />
                 <Route path="/settings" element={<Settings />} />

@@ -12,10 +12,10 @@ import {
   BookmarkCheck,
   Award
 } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
 import api from '../services/api'
 import toast from 'react-hot-toast'
 import { useAuth } from '../context/AuthContext'
-import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
   const { user } = useAuth()
@@ -104,11 +104,13 @@ const Home = () => {
               {movies.slice(0, 4).map(movie => (
                 <div key={movie.id} className="mini-movie-card">
                   <div className="thumb-container">
-                    <img src={movie.posterUrl || 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=400&q=80'} alt={movie.title} />
-                    <button onClick={() => addToWatchlist(movie.id)} className="add-btn"><Plus size={16} /></button>
+                    <Link to={`/movie/${movie.id}`}>
+                      <img src={movie.posterUrl || 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=400&q=80'} alt={movie.title} />
+                    </Link>
+                    <button onClick={() => addToWatchlist(movie.id)} className="add-btn" title="Add to Watchlist"><Plus size={16} /></button>
                   </div>
                   <div className="mini-info">
-                    <p className="mini-title text-sm">{movie.title}</p>
+                    <Link to={`/movie/${movie.id}`} className="mini-title text-sm hover:text-primary transition-colors">{movie.title}</Link>
                     <p className="mini-meta text-xs">{movie.genres?.[0] || 'Unknown'}</p>
                   </div>
                 </div>
