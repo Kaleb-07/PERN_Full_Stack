@@ -90,4 +90,37 @@ const logout = async (req, res) => {
     });
 };
 
-export { register, login, logout };
+const changePassword = async (req, res) => {
+    const { oldPassword, newPassword } = req.body;
+
+    if (!oldPassword || !newPassword) {
+        return res.status(400).json({ error: "Old and new passwords are required" });
+    }
+
+    const user = await prisma.user.findUnique({
+        where: { id: req.user.id }
+    });
+
+    if (!user) {
+        return res.status(404).json({ error: "User not found" });
+    }
+
+    // Verify old password
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) {
+        return res.status(401).json({ error: "Incorrect current password" });
+    }
+
+    // Hash new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    await prisma.user.update({
+        where: { id: req.user.id },
+        data: { password: hashedPassword }
+    });
+
+    res.status(200).json({ status: "success", message: "Password updated successfully" });
+};
+
+export { register, login, logout, changePassword };

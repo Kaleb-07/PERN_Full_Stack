@@ -936,4 +936,48 @@
   opacity: 0.8;
 }
 
+/* Sidebar Role Cues */
+.admin-link.active {
+  background: rgba(20, 184, 166, 0.15) !important;
+  color: #14b8a6 !important;
+}
+
+.admin-link:hover {
+  color: #14b8a6 !important;
+}
+
+.admin-avatar {
+  background: linear-gradient(135deg, #14b8a6, #0d9488) !important;
+  box-shadow: 0 0 15px rgba(20, 184, 166, 0.3);
+}
+
+.role-tag-mini {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.status-dot.admin {
+  background: #14b8a6;
+  box-shadow: 0 0 8px #14b8a6;
+}
+
+.status-dot.user {
+  background: #6366f1;
+}
+
+.user-role {
+  text-transform: uppercase;
+  font-size: 0.65rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.05em;
+}
+
+
 

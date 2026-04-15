@@ -7,6 +7,9 @@
   gap: 2rem;
   color: var(--text-color);
   animation: fadeIn 0.4s ease-out;
+  /* Local Admin Theme Color */
+  --admin-primary: #14b8a6;
+  --admin-primary-glow: rgba(20, 184, 166, 0.15);
 }
 
 .admin-header {
@@ -20,7 +23,7 @@
 .admin-header h1 {
   font-size: 2.2rem;
   margin: 0 0 0.5rem;
-  background: linear-gradient(90deg, #fff, #a1a1aa);
+  background: linear-gradient(90deg, #fff, var(--admin-primary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -58,10 +61,10 @@
 }
 
 .admin-tab-btn.active {
-  background: var(--primary-color, #e50914);
+  background: var(--admin-primary);
   color: #fff;
-  border-color: var(--primary-color, #e50914);
-  box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3);
+  border-color: var(--admin-primary);
+  box-shadow: 0 4px 15px var(--admin-primary-glow);
 }
 
 /* Stats Cards */
@@ -94,8 +97,8 @@
 .stat-icon {
   padding: 0.8rem;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--primary-color, #e50914);
+  background: var(--admin-primary-glow);
+  color: var(--admin-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -200,9 +203,9 @@
 }
 
 .role-badge.admin {
-  background: rgba(229, 9, 20, 0.15);
-  color: #ff4d4d;
-  border: 1px solid rgba(229, 9, 20, 0.3);
+  background: var(--admin-primary-glow);
+  color: var(--admin-primary);
+  border: 1px solid rgba(20, 184, 166, 0.3);
 }
 
 .role-badge.user {

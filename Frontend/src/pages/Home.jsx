@@ -8,53 +8,68 @@ import {
   Users,
   Eye,
   Plus,
-  Loader2
+  Loader2,
+  BookmarkCheck,
+  Award
 } from 'lucide-react'
 import api from '../services/api'
 import toast from 'react-hot-toast'
+import { useAuth } from '../context/AuthContext'
 
 const Home = () => {
+  const { user } = useAuth()
   const [movies, setMovies] = useState([])
+  const [watchlist, setWatchlist] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const fetchMovies = async () => {
+    const fetchData = async () => {
       try {
-        const { data } = await api.get('/movies')
-        // Check if data is an array or if it's wrapped in a status/data object
-        setMovies(Array.isArray(data) ? data : data.data || [])
+        const [moviesRes, watchlistRes] = await Promise.all([
+          api.get('/movies'),
+          api.get('/watchlist')
+        ])
+        
+        setMovies(Array.isArray(moviesRes.data) ? moviesRes.data : moviesRes.data.data || [])
+        setWatchlist(Array.isArray(watchlistRes.data) ? watchlistRes.data : watchlistRes.data.data || [])
       } catch (error) {
-        console.error('Error fetching movies:', error)
-        toast.error('Failed to load movies')
+        console.error('Error fetching dashboard data:', error)
+        toast.error('Failed to load dashboard data')
       } finally {
         setLoading(false)
       }
     }
-    fetchMovies()
+    fetchData()
   }, [])
 
   const addToWatchlist = async (movieId) => {
     try {
       await api.post('/watchlist', { movieId, status: 'PLANNED' })
       toast.success('Added to watchlist!')
+      // Refresh watchlist
+      const { data } = await api.get('/watchlist')
+      setWatchlist(Array.isArray(data) ? data : data.data || [])
     } catch (error) {
       const message = error.response?.data?.error || 'Failed to add to watchlist'
       toast.error(message)
     }
   }
 
+  const completedCount = watchlist.filter(item => item.status === 'COMPLETED').length
+  const avgRating = watchlist.filter(item => item.rating).reduce((acc, curr, index, arr) => acc + curr.rating / arr.length, 0).toFixed(1)
+
   const stats = [
-    { label: 'Total Movies', value: movies.length, icon: <Film size={20} />, trend: '+12%', color: '#6366f1' },
-    { label: 'Featured Genres', value: '8', icon: <Star size={20} />, trend: '+5%', color: '#f59e0b' },
-    { label: 'Minutes Watched', value: '18.4k', icon: <Clock size={20} />, trend: '+24%', color: '#22c55e' },
-    { label: 'Community', value: '850', icon: <Users size={20} />, trend: '+8%', color: '#ec4899' },
+    { label: 'Your Watchlist', value: watchlist.length, icon: <BookmarkCheck size={20} />, trend: 'Active', color: '#6366f1' },
+    { label: 'Completed', value: completedCount, icon: <Play size={20} />, trend: 'Finished', color: '#22c55e' },
+    { label: 'Avg Rating', value: avgRating > 0 ? avgRating : 'N/A', icon: <Award size={20} />, trend: 'Points', color: '#f59e0b' },
+    { label: 'Total Catalog', value: movies.length, icon: <Film size={20} />, trend: 'Movies', color: '#ec4899' },
   ]
 
   return (
     <div className="dashboard-home animate-slide-up">
       <div className="dashboard-welcome">
-        <h1 className="h1">Dashboard <span>Overview</span></h1>
-        <p className="text-secondary">Welcome back! Here's the latest from the movie database.</p>
+        <h1 className="h1">Welcome back, <span>{user?.name?.split(' ')[0] || 'User'}</span></h1>
+        <p className="text-secondary">Here is what's happening with your movie collection today.</p>
       </div>
 
       <div className="stats-grid">

@@ -51,7 +51,7 @@ const Sidebar = () => {
           {user?.role === 'ADMIN' && (
             <Link 
               to="/admin" 
-              className={`nav-item ${location.pathname.startsWith('/admin') ? 'active' : ''}`}
+              className={`nav-item admin-link ${location.pathname.startsWith('/admin') ? 'active' : ''}`}
             >
               <Shield size={20} />
               <span>Admin Dashboard</span>
@@ -75,10 +75,15 @@ const Sidebar = () => {
       <div className="sidebar-footer">
         {user ? (
           <div className="user-profile-mini">
-            <div className="avatar">{user.name?.[0] || 'U'}</div>
+            <div className={`avatar ${user.role === 'ADMIN' ? 'admin-avatar' : ''}`}>
+              {user.name?.[0] || 'U'}
+            </div>
             <div className="user-info">
               <p className="user-name">{user.name}</p>
-              <p className="user-role">{user.role === 'ADMIN' ? 'Admin' : 'Member'}</p>
+              <div className="role-tag-mini">
+                <div className={`status-dot ${user.role === 'ADMIN' ? 'admin' : 'user'}`}></div>
+                <p className="user-role">{user.role === 'ADMIN' ? 'Administrator' : 'Premium Member'}</p>
+              </div>
             </div>
           </div>
         ) : (

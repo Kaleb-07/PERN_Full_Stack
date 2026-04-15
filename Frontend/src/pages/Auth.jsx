@@ -12,7 +12,11 @@ const Auth = () => {
 
   useEffect(() => {
     if (user) {
-      navigate('/')
+      if (user.role === 'ADMIN') {
+        navigate('/admin')
+      } else {
+        navigate('/')
+      }
     }
   }, [user, navigate])
 
