@@ -8,7 +8,8 @@ import {
   LogOut,
   ChevronLeft,
   Search,
-  PlusSquare
+  PlusSquare,
+  Shield
 } from 'lucide-react'
 
 import { useAuth } from '../context/AuthContext'
@@ -47,6 +48,15 @@ const Sidebar = () => {
               <span>{item.name}</span>
             </Link>
           ))}
+          {user?.role === 'ADMIN' && (
+            <Link 
+              to="/admin" 
+              className={`nav-item ${location.pathname.startsWith('/admin') ? 'active' : ''}`}
+            >
+              <Shield size={20} />
+              <span>Admin Dashboard</span>
+            </Link>
+          )}
         </div>
 
         <div className="nav-group">
@@ -68,7 +78,7 @@ const Sidebar = () => {
             <div className="avatar">{user.name?.[0] || 'U'}</div>
             <div className="user-info">
               <p className="user-name">{user.name}</p>
-              <p className="user-role">Member</p>
+              <p className="user-role">{user.role === 'ADMIN' ? 'Admin' : 'Member'}</p>
             </div>
           </div>
         ) : (
