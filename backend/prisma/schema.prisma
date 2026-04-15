@@ -14,7 +14,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  // url      = env("DATABASE_URL")
 }
 
 model User {
@@ -22,6 +21,7 @@ model User {
   email     String   @unique
   name      String
   password  String
+  role      Role     @default(USER)
   createdAt DateTime @default(now())
 
   // Relations
@@ -66,4 +66,9 @@ enum WatchListStatus {
   WATCHING
   COMPLETED
   DROPPED
+}
+
+enum Role {
+  USER
+  ADMIN
 }
