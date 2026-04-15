@@ -1,10 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import toast from 'react-hot-toast';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
   const [loading, setLoading] = useState(false);
 
@@ -59,6 +61,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('token');
     setUser(null);
     toast.success('Logged out successfully');
+    navigate('/auth');
   };
 
   return (

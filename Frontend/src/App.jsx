@@ -24,7 +24,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/watchlist" element={<Watchlist />} />
                 <Route path="/browse" element={<BrowseMovies />} />
-                <Route path="/add" element={<AddMovie />} />
+                <Route path="/add" element={<AdminRoute><AddMovie /></AdminRoute>} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
               </Routes>

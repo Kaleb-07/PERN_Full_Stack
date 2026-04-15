@@ -20,10 +20,9 @@ const Sidebar = () => {
   const isActive = (path) => location.pathname === path
 
   const navItems = [
-    { name: 'Dashboard', icon: <LayoutDashboard size={20} />, path: '/' },
+    { name: 'Home', icon: <LayoutDashboard size={20} />, path: '/' },
     { name: 'My Watchlist', icon: <Bookmark size={20} />, path: '/watchlist' },
     { name: 'Browse Movies', icon: <Search size={20} />, path: '/browse' },
-    { name: 'Add Movie', icon: <PlusSquare size={20} />, path: '/add' },
   ]
 
   return (
@@ -49,13 +48,22 @@ const Sidebar = () => {
             </Link>
           ))}
           {user?.role === 'ADMIN' && (
-            <Link 
-              to="/admin" 
-              className={`nav-item admin-link ${location.pathname.startsWith('/admin') ? 'active' : ''}`}
-            >
-              <Shield size={20} />
-              <span>Admin Dashboard</span>
-            </Link>
+            <>
+              <Link 
+                to="/add" 
+                className={`nav-item ${isActive('/add') ? 'active' : ''}`}
+              >
+                <PlusSquare size={20} />
+                <span>Add Movie</span>
+              </Link>
+              <Link 
+                to="/admin" 
+                className={`nav-item admin-link ${location.pathname.startsWith('/admin') ? 'active' : ''}`}
+              >
+                <Shield size={20} />
+                <span>Admin Dashboard</span>
+              </Link>
+            </>
           )}
         </div>
 
@@ -73,7 +81,7 @@ const Sidebar = () => {
       </nav>
 
       <div className="sidebar-footer">
-        {user ? (
+        {user && (
           <div className="user-profile-mini">
             <div className={`avatar ${user.role === 'ADMIN' ? 'admin-avatar' : ''}`}>
               {user.name?.[0] || 'U'}
@@ -86,11 +94,6 @@ const Sidebar = () => {
               </div>
             </div>
           </div>
-        ) : (
-          <Link to="/auth" className="nav-item">
-            <LogOut size={20} />
-            <span>Sign In</span>
-          </Link>
         )}
       </div>
     </aside>

@@ -15,9 +15,11 @@ import {
 import api from '../services/api'
 import toast from 'react-hot-toast'
 import { useAuth } from '../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
   const { user } = useAuth()
+  const navigate = useNavigate()
   const [movies, setMovies] = useState([])
   const [watchlist, setWatchlist] = useState([])
   const [loading, setLoading] = useState(true)
@@ -120,13 +122,15 @@ const Home = () => {
           )}
         </section>
 
-        <section className="activity-widget glass-panel">
-          <div className="widget-header">
-            <h2 className="h2">Quick Add</h2>
-          </div>
-          <p className="text-secondary text-sm mb-4">You can manually add movies to your database from the "Add Movie" portal.</p>
-          <button className="btn-primary w-full">Go to Add Movie</button>
-        </section>
+        {user?.role === 'ADMIN' && (
+          <section className="activity-widget glass-panel">
+            <div className="widget-header">
+              <h2 className="h2">Quick Add</h2>
+            </div>
+            <p className="text-secondary text-sm mb-4">You can manually add movies to your database from the "Add Movie" portal.</p>
+            <button className="btn-primary w-full" onClick={() => navigate('/add')}>Go to Add Movie</button>
+          </section>
+        )}
       </div>
     </div>
   )
