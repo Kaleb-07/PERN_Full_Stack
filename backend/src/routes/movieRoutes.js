@@ -1,21 +1,22 @@
 import express from "express";
-// Routing CRUD
+import { authMiddleware } from "../middleware/authMiddleware.js";
+import { 
+    getAllMovies, 
+    getMovieById, 
+    createMovie, 
+    updateMovie, 
+    deleteMovie 
+} from "../controllers/movieController.js";
+
 const router = express.Router();
 
-router.get("/", (req, res) => {
-    res.json({ httpMethod: "get" });
-});
+// Public routes
+router.get("/", getAllMovies);
+router.get("/:id", getMovieById);
 
-router.post("/", (req, res) => {
-    res.json({ httpMethod: "post" });
-});
-
-router.put("/", (req, res) => {
-    res.json({ httpMethod: "put" });
-});
-
-router.delete("/", (req, res) => {
-    res.json({ httpMethod: "delete" });
-});
+// Protected routes
+router.post("/", authMiddleware, createMovie);
+router.put("/:id", authMiddleware, updateMovie);
+router.delete("/:id", authMiddleware, deleteMovie);
 
 export default router;

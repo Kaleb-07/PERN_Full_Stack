@@ -4,6 +4,8 @@ import Layout from './components/Layout'
 import Home from './pages/Home'
 import Watchlist from './pages/Watchlist'
 import Auth from './pages/Auth'
+import BrowseMovies from './pages/BrowseMovies'
+import AddMovie from './pages/AddMovie'
 import AdminDashboard from './pages/AdminDashboard'
 import AdminRoute from './components/AdminRoute'
 import './App.css'
@@ -20,6 +22,8 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/watchlist" element={<Watchlist />} />
+                <Route path="/browse" element={<BrowseMovies />} />
+                <Route path="/add" element={<AddMovie />} />
                 <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
               </Routes>
             </Layout>

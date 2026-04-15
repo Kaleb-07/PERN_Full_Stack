@@ -122,4 +122,28 @@ const removeFromWatchlist = async (req, res) => {
     });
 };
 
-export { addToWatchlist, updateWatchlistItem, removeFromWatchlist };
+/**
+ * Get current user's watchlist
+ * Requires protect middleware
+ */
+const getMyWatchlist = async (req, res) => {
+    const watchlist = await prisma.watchlistItem.findMany({
+        where: { userId: req.user.id },
+        include: {
+            movie: true, // Include full movie details
+        },
+        orderBy: { createdAt: "desc" },
+    });
+
+    res.status(200).json({
+        status: "success",
+        data: watchlist,
+    });
+};
+
+export {
+    addToWatchlist,
+    updateWatchlistItem,
+    removeFromWatchlist,
+    getMyWatchlist,
+};

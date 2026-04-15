@@ -1,5 +1,6 @@
+// Professional Auth Redesign
 import React, { useState, useEffect } from 'react'
-import { Mail, Lock, User, ArrowRight, Loader2 } from 'lucide-react'
+import { Mail, Lock, User, ArrowRight, Loader2, Film } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 
@@ -29,11 +30,15 @@ const Auth = () => {
   }
 
   return (
-    <div className="auth-page animate-slide-up">
+    <div className="auth-page">
       <div className="auth-card glass-panel">
         <div className="auth-header">
-          <h2 className="h2">{isLogin ? 'Welcome Back' : 'Create Account'}</h2>
-          <p className="text-secondary">{isLogin ? 'Enter your credentials to continue' : 'Join CineAdmin to start managing your watchlist'}</p>
+          <div className="auth-brand">
+            <Film className="logo-icon" size={32} />
+            <h1>Cine<span>Admin</span></h1>
+          </div>
+          <h2>{isLogin ? 'Welcome Back' : 'Create Account'}</h2>
+          <p>{isLogin ? 'Enter your credentials to access your dashboard' : 'Join our community and start curating your watchlist'}</p>
         </div>
 
         <form className="auth-form" onSubmit={handleSubmit}>
