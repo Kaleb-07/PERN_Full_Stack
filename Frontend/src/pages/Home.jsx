@@ -18,11 +18,73 @@ import { motion } from 'framer-motion'
 import api from '../services/api'
 import toast from 'react-hot-toast'
 import { useAuth } from '../context/AuthContext'
+import MovieRow from '../components/MovieRow'
+
+const MOCK_MOVIES = [
+  {
+    id: 'm1',
+    title: 'The Witcher',
+    genres: ['Drama', 'Adventure', 'Fantasy'],
+    rating: 4.9,
+    posterUrl: 'https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?w=600&q=80',
+    backdropUrl: 'https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?w=1200&q=80'
+  },
+  {
+    id: 'm2',
+    title: 'Stranger Things',
+    genres: ['Horror', 'Sci-Fi', 'Thriller'],
+    rating: 4.8,
+    posterUrl: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&q=80'
+  },
+  {
+    id: 'm3',
+    title: 'Interstellar',
+    genres: ['Sci-Fi', 'Drama', 'Adventure'],
+    rating: 4.9,
+    posterUrl: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=600&q=80'
+  },
+  {
+    id: 'm4',
+    title: 'The Dark Knight',
+    genres: ['Action', 'Crime', 'Drama'],
+    rating: 4.9,
+    posterUrl: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=600&q=80'
+  },
+  {
+    id: 'm5',
+    title: 'Inception',
+    genres: ['Action', 'Sci-Fi', 'Thriller'],
+    rating: 4.7,
+    posterUrl: 'https://plus.unsplash.com/premium_photo-1681488262364-8aeb1b4adc56?w=600&q=80'
+  },
+  {
+    id: 'm6',
+    title: 'La La Land',
+    genres: ['Romance', 'Comedy', 'Music'],
+    author: 'Damien Chazelle',
+    rating: 4.5,
+    posterUrl: 'https://images.unsplash.com/photo-1485095329183-d279b86ecec4?w=600&q=80'
+  },
+  {
+    id: 'm7',
+    title: 'The Conjuring',
+    genres: ['Horror', 'Mystery', 'Thriller'],
+    rating: 4.6,
+    posterUrl: 'https://images.unsplash.com/photo-1509248961158-e54f6934749c?w=600&q=80'
+  },
+  {
+    id: 'm8',
+    title: 'Our Planet',
+    genres: ['Documentary'],
+    rating: 4.9,
+    posterUrl: 'https://images.unsplash.com/photo-1544551763-47a0159f963f?w=600&q=80'
+  }
+];
 
 const Home = () => {
   const { user } = useAuth()
   const navigate = useNavigate()
-  const [movies, setMovies] = useState([])
+  const [movies, setMovies] = useState(MOCK_MOVIES)
   const [watchlist, setWatchlist] = useState([])
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('New')
@@ -35,7 +97,10 @@ const Home = () => {
           api.get('/watchlist')
         ])
 
-        setMovies(Array.isArray(moviesRes.data) ? moviesRes.data : moviesRes.data.data || [])
+        const dbMovies = Array.isArray(moviesRes.data) ? moviesRes.data : moviesRes.data.data || []
+        if (dbMovies.length > 0) {
+          setMovies(dbMovies)
+        }
         setWatchlist(Array.isArray(watchlistRes.data) ? watchlistRes.data : watchlistRes.data.data || [])
       } catch (error) {
         console.error('Error fetching dashboard data:', error)
@@ -170,7 +235,7 @@ const Home = () => {
         <section>
           <div className="content-section-header mb-8">
             <h2 className="text-2xl font-black">Trending now 🔥</h2>
-            <Link to="/browse" className="text-sm font-bold text-primary flex items-center gap-1 hover:gap-2 transition-all">Explore All <ChevronRight size={14} /></Link>
+            <Link to="/browse" className="row-explore-link">Explore All <ChevronRight size={14} /></Link>
           </div>
           <div className="carousel-container no-scrollbar p-1 gap-6 my-6">
             {movies.slice(1, 7).map(movie => (
@@ -211,83 +276,145 @@ const Home = () => {
           </div>
         </section>
 
+        {/* Top Rated */}
+        <MovieRow
+          title="Top Rated"
+          emoji="⭐"
+          movies={[...movies].sort((a, b) => (b.rating || 0) - (a.rating || 0)).slice(0, 12)}
+          isLarge={true}
+          onWatchlist={addToWatchlist}
+        />
+
+        {/* Action Movies */}
+        <MovieRow
+          title="Action Movies"
+          emoji="💥"
+          genre="Action"
+          movies={movies.filter(m => m.genres?.map(g => g.toLowerCase()).includes('action'))}
+          isLarge={false}
+          onWatchlist={addToWatchlist}
+        />
+
+        {/* Comedy Movies */}
+        <MovieRow
+          title="Comedy Movies"
+          emoji="😂"
+          genre="Comedy"
+          movies={movies.filter(m => m.genres?.map(g => g.toLowerCase()).includes('comedy'))}
+          isLarge={false}
+          onWatchlist={addToWatchlist}
+        />
+
+        {/* Horror Movies */}
+        <MovieRow
+          title="Horror Movies"
+          emoji="👻"
+          genre="Horror"
+          movies={movies.filter(m => m.genres?.map(g => g.toLowerCase()).includes('horror'))}
+          isLarge={false}
+          onWatchlist={addToWatchlist}
+        />
+
+        {/* Romance Movies */}
+        <MovieRow
+          title="Romance Movies"
+          emoji="❤️"
+          genre="Romance"
+          movies={movies.filter(m => m.genres?.map(g => g.toLowerCase()).includes('romance'))}
+          isLarge={false}
+          onWatchlist={addToWatchlist}
+        />
+
+        {/* Documentaries */}
+        <MovieRow
+          title="Documentaries"
+          emoji="🎥"
+          genre="Documentary"
+          movies={movies.filter(m => m.genres?.map(g => g.toLowerCase()).includes('documentary'))}
+          isLarge={false}
+          onWatchlist={addToWatchlist}
+        />
+
       </div>
 
       {/* --- RIGHT SIDEBAR --- */}
       <aside className="activity-right-panel glass-panel">
-
-        <div className="relative group">
-          <Search size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" />
-          <input
-            type="text"
-            placeholder="Search entertainment..."
-            className="form-input-modern pl-14 py-4"
+        
+        {/* TOP GROUP: Search, Notification, Profile */}
+        <div className="sidebar-top-group">
+          <div className="sidebar-search-container">
+            <input 
+              type="text" 
+              placeholder="Search" 
+              className="sidebar-search-input"
+            />
+            <Search size={16} className="sidebar-search-icon" />
+          </div>
+          
+          <button className="sidebar-icon-btn">
+            <Activity size={20} strokeWidth={2.5} />
+          </button>
+          
+          <img 
+            src={`https://ui-avatars.com/api/?name=${user?.name || 'User'}&background=random`} 
+            alt="Profile" 
+            className="sidebar-avatar"
           />
         </div>
 
-        {/* Continue Watching */}
+        {/* SECTION: Continue Watching */}
         <div>
-          <h3 className="section-title-alt mb-6 flex items-center gap-2">
-            <Activity size={18} className="text-primary" /> Continue watching
-          </h3>
-          <div className="flex flex-col gap-5">
-            {watchlist.slice(0, 3).map(item => (
-              <div key={item.id} className="continue-watching-card group" onClick={() => navigate(`/movie/${item.movieId}`)}>
-                <div className="thumbnail-box shadow-lg">
-                  <img src={item.movie?.posterUrl} alt="" className="transition-transform group-hover:scale-110" />
-                  <div className="play-overlay opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Play size={28} fill="white" />
+          <h3 className="text-xl font-bold mb-6 text-gray-800">Continue watching</h3>
+          <div className="flex flex-col gap-4">
+            {watchlist.slice(0, 3).map((item) => (
+              <div key={item.id} className="continue-card group" onClick={() => navigate(`/movie/${item.movieId}`)}>
+                <div className="continue-thumbnail-box">
+                  <img src={item.movie?.posterUrl} alt={item.movie?.title} className="continue-img" />
+                  <div className="continue-play-overlay">
+                    <div className="play-circle">
+                      <Play size={14} fill="white" />
+                    </div>
                   </div>
                 </div>
-                <div className="flex-grow">
-                  <h4 className="text-sm font-black truncate pr-4 text-gray-800">{item.movie?.title}</h4>
-                  <p className="text-[11px] text-gray-400 font-bold mb-2">{item.movie?.genres?.[0]}</p>
-                  <div className="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden mt-2">
-                    <div className="bg-primary h-full w-2/3 rounded-full"></div>
-                  </div>
+                <div className="continue-info">
+                  <h4 className="continue-title">{item.movie?.title}</h4>
+                  <p className="continue-genres">
+                    {item.movie?.genres?.slice(0, 2).join(', ') || 'Action, Drama'}
+                  </p>
+                  <span className="continue-year">{item.movie?.releaseYear || '2023'}</span>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Friends Activity */}
-        <div>
-          <h3 className="section-title-alt mb-6">Friends activity</h3>
-          <div className="flex flex-col gap-8">
-            <div className="friend-item">
-              <div className="relative">
-                <img src="https://i.pravatar.cc/100?img=12" className="friend-avatar w-14 h-14" alt="" />
-                <span className="absolute bottom-0 right-0 w-4 h-4 bg-white rounded-full flex items-center justify-center border-2 border-white">
-                  <div className="live-dot" style={{ margin: 0 }}></div>
-                </span>
+        {/* SECTION: Friends Activity */}
+        <div className="mt-2">
+          <h3 className="text-xl font-bold mb-6 text-gray-800">Friends activity</h3>
+          <div className="flex flex-col gap-6">
+            {[
+              { id: 1, name: 'James Banistor', status: 'Is now watching Stranger Things', avatar: 'JB' },
+              { id: 2, name: 'Jenna Barbera', status: 'Is now watching You', avatar: 'JB' },
+              { id: 3, name: 'Sara Cameron', status: 'Is now watching The Witcher', avatar: 'SC' },
+              { id: 4, name: 'Jonathan Paul', status: 'Is now watching Dune', avatar: 'JP' },
+            ].map((friend) => (
+              <div key={friend.id} className="friend-row">
+                <div className="friend-avatar-circle">
+                  {friend.id === 1 ? (
+                    <img src="https://i.pravatar.cc/150?u=james" alt="" className="friend-avatar-img" />
+                  ) : friend.id === 2 ? (
+                    <img src="https://i.pravatar.cc/150?u=jenna" alt="" className="friend-avatar-img" />
+                  ) : (
+                    <span>{friend.avatar}</span>
+                  )}
+                </div>
+                <div className="friend-meta">
+                  <span className="friend-username">{friend.name}</span>
+                  <span className="friend-watching-text">{friend.status}</span>
+                </div>
               </div>
-              <div>
-                <h4 className="text-sm font-black text-gray-800">James Banistor</h4>
-                <p className="text-[11px] text-gray-500 mt-1">Watching <span className="font-black text-gray-800">Stranger Things</span></p>
-              </div>
-            </div>
-            <div className="friend-item">
-              <div className="relative">
-                <img src="https://i.pravatar.cc/100?img=44" className="friend-avatar w-14 h-14" alt="" />
-                <span className="absolute bottom-0 right-0 w-4 h-4 bg-white rounded-full flex items-center justify-center border-2 border-white">
-                  <div className="live-dot" style={{ margin: 0 }}></div>
-                </span>
-              </div>
-              <div>
-                <h4 className="text-sm font-black text-gray-800">Jenna Barbera</h4>
-                <p className="text-[11px] text-gray-500 mt-1">Watching <span className="font-black text-gray-800">Interstellar</span></p>
-              </div>
-            </div>
+            ))}
           </div>
-        </div>
-
-        {/* Pro Upgrade Card */}
-        <div className="mt-auto p-8 rounded-3xl bg-gradient-to-br from-indigo-600 to-indigo-900 text-white shadow-xl relative overflow-hidden">
-          <div className="absolute -right-8 -top-8 w-32 h-32 bg-white bg-opacity-10 rounded-full blur-2xl"></div>
-          <h4 className="text-lg font-black mb-2">Upgrade to PRO</h4>
-          <p className="text-xs opacity-70 mb-6 font-medium">Get 4K quality, offline mode and early access.</p>
-          <button className="w-full py-3 bg-white text-indigo-900 rounded-xl font-black text-xs hover:shadow-glow transition-all">Go Premium</button>
         </div>
 
       </aside>

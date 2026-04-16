@@ -16,7 +16,7 @@
 
 .main-content {
   flex: 1;
-  overflow-y: auto;
+  overflow-y: hidden; /* Disable global scroll to allow internal feed scroll */
   scroll-behavior: smooth;
 }
 
@@ -858,25 +858,236 @@
   grid-template-columns: 1fr var(--right-panel-width);
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden;
+  height: 100%; /* Fill the main container */
+  overflow: hidden;
+  align-items: start;
 }
 
 .home-feed {
   padding: 2.5rem;
   max-width: calc(100vw - var(--sidebar-width) - var(--right-panel-width));
-  overflow-x: hidden;
+  height: 100%;
+  overflow-y: auto; /* This becomes our primary scroll area */
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for the feed to keep it clean */
+.home-feed::-webkit-scrollbar {
+  width: 6px;
+}
+.home-feed::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.05);
+  border-radius: 10px;
+}
+.home-feed:hover::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.1);
 }
 
 .activity-right-panel {
   width: var(--right-panel-width);
   border-left: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(20px);
-  padding: 2.5rem;
+  background: var(--bg-main);
+  padding: 2.5rem 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 2.5rem;
+  height: 100%; /* Fill the dashboard-home */
+  overflow-y: auto;
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
 }
+
+.activity-right-panel::-webkit-scrollbar {
+  display: none; 
+}
+
+/* Sidebar Top Group (Search + Bell + Profile) */
+.sidebar-top-group {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.sidebar-search-container {
+  flex: 1;
+  position: relative;
+}
+
+.sidebar-search-icon {
+  position: absolute;
+  right: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+
+.sidebar-search-input {
+  width: 100%;
+  background: #f1f3f6;
+  border: none;
+  border-radius: 2rem;
+  padding: 0.75rem 1.5rem;
+  padding-right: 3rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.sidebar-search-input:focus {
+  background: #fff;
+  box-shadow: 0 0 0 2px var(--primary-light);
+}
+
+.sidebar-icon-btn {
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.sidebar-icon-btn:hover {
+  transform: scale(1.1);
+}
+
+.sidebar-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Continue Watching (Reference Image Style) */
+.continue-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 0.5rem;
+  border-radius: 1.25rem;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+
+.continue-card:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.continue-thumbnail-box {
+  position: relative;
+  width: 120px;
+  height: 80px;
+  flex-shrink: 0;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.continue-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.continue-play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.2);
+  color: white;
+  opacity: 0.9;
+}
+
+.play-circle {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px);
+  padding: 6px;
+  border-radius: 50%;
+  display: flex;
+}
+
+.continue-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.continue-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.continue-genres {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.continue-year {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #a0aec0;
+  margin-top: 4px;
+}
+
+/* Friends Activity (Reference Image Style) */
+.friend-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+
+.friend-avatar-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #f1f3f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--primary);
+  flex-shrink: 0;
+  border: 2px solid #fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.friend-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.friend-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.friend-username {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.friend-watching-text {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
 
 /* Animations & Transitions */
 .animate-fade-in {
@@ -1040,4 +1251,221 @@
 /* Micro-haptic click effect */
 .filter-tab:active {
   transform: scale(0.95);
+}
+
+/* ================================
+   MOVIE ROW — Reusable Section Row
+   ================================ */
+.movie-row-section {
+  margin-bottom: 2.5rem;
+}
+
+.movie-row-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.row-emoji {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.row-explore-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 800;
+  font-family: 'Outfit', sans-serif;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  background: transparent;
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1.5px solid transparent;
+}
+
+.row-explore-link:hover {
+  color: var(--primary);
+  background: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border-color: rgba(99, 102, 241, 0.1);
+  transform: translateX(-5px);
+}
+
+.row-explore-link:active {
+  transform: scale(0.95);
+}
+
+/* Scroll Track */
+.movie-row-track {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  padding: 0.75rem 0.25rem 1.25rem;
+  scrollbar-width: none;
+}
+
+.movie-row-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Card Base */
+.movie-row-card {
+  flex-shrink: 0;
+  border-radius: 1.75rem;
+  overflow: hidden;
+  position: relative;
+  background: #111;
+  transition: transform 0.45s cubic-bezier(0.19, 1, 0.22, 1),
+              box-shadow 0.45s cubic-bezier(0.19, 1, 0.22, 1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.movie-row-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 22px 45px rgba(0, 0, 0, 0.18);
+}
+
+/* Small card — landscape/backdrop style */
+.card-small {
+  width: 280px;
+  height: 170px;
+}
+
+/* Large card — portrait/poster style */
+.card-large {
+  width: 200px;
+  height: 300px;
+}
+
+.row-card-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  text-decoration: none;
+}
+
+.row-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.55s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.movie-row-card:hover .row-card-img {
+  transform: scale(1.08);
+}
+
+/* Rating Badge */
+.row-rating-badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  background: white;
+  padding: 0.2rem 0.55rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+}
+
+.row-rating-value {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+.row-rating-star {
+  fill: #facc15;
+  color: #facc15;
+}
+
+/* Heart Button */
+.row-heart-btn {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.65rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.row-heart-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.12);
+}
+
+/* Overlay */
+.row-card-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1rem;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.row-overlay-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(10, 10, 15, 0.92) 0%,
+    rgba(10, 10, 15, 0.4) 40%,
+    transparent 70%
+  );
+  z-index: -1;
+}
+
+.row-card-info {
+  position: relative;
+  z-index: 10;
+}
+
+.row-card-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin-bottom: 0.15rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.row-card-genres {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #d1d5db;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
