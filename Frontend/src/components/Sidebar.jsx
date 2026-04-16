@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { 
+import {
   Home,
   LayoutGrid,
   User,
@@ -30,9 +30,9 @@ const Sidebar = () => {
   const navItems = [
     { name: 'Home', icon: <Home size={22} />, path: '/' },
     { name: 'Browse', icon: <LayoutGrid size={22} />, path: '/browse' },
-    { name: 'Profile', icon: <User size={22} />, path: '/profile' },
+    // { name: 'Profile', icon: <User size={22} />, path: '/profile' },
     { name: 'Special', icon: <Zap size={22} />, path: '/special', hasDot: true },
-    { name: 'Alerts', icon: <Bell size={22} />, path: '/alerts' },
+    // { name: 'Downloads', icon: <Download size={22} />, path: '/downloads' },
     { name: 'Schedule', icon: <Calendar size={22} />, path: '/schedule' },
     { name: 'Chat', icon: <MessageSquare size={22} />, path: '/chat' },
   ]
@@ -43,7 +43,7 @@ const Sidebar = () => {
         <div className="logo cursor-pointer" onClick={() => setIsCollapsed(!isCollapsed)}>
           <Film className="logo-icon-adaptive" size={28} />
           {!isCollapsed && (
-            <motion.span 
+            <motion.span
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               className="logo-text-adaptive ml-3"
@@ -58,9 +58,9 @@ const Sidebar = () => {
         <div className="liquid-segment">
           <div className="nav-main">
             {navItems.map((item) => (
-              <Link 
-                key={item.name} 
-                to={item.path} 
+              <Link
+                key={item.name}
+                to={item.path}
                 className={`nav-item ${isActive(item.path) ? 'active' : ''}`}
                 title={isCollapsed ? item.name : ''}
               >
@@ -69,7 +69,7 @@ const Sidebar = () => {
                   {item.hasDot && <span className="status-dot"></span>}
                 </div>
                 {!isCollapsed && (
-                  <motion.span 
+                  <motion.span
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     className="nav-label"
@@ -83,10 +83,10 @@ const Sidebar = () => {
 
           <div className="nav-footer">
             <Link to="/settings" className={`nav-item ${isActive('/settings') ? 'active' : ''}`} title="Settings">
-               <div className="icon-wrapper"><Settings size={22} /></div>
-               {!isCollapsed && <span className="nav-label">Settings</span>}
+              <div className="icon-wrapper"><Settings size={22} /></div>
+              {!isCollapsed && <span className="nav-label">Settings</span>}
             </Link>
-            
+
             <button onClick={logout} className="nav-item logout-btn" title="Logout">
               <div className="icon-wrapper"><LogOut size={22} /></div>
               {!isCollapsed && <span className="nav-label">Logout</span>}

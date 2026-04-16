@@ -126,4 +126,61 @@ const changePassword = async (req, res) => {
     res.status(200).json({ status: "success", message: "Password updated successfully" });
 };
 
-export { register, login, logout, changePassword };
+const updateProfile = async (req, res) => {
+    const { 
+        name, businessName, phoneNumber, fax, city, state, country, postcode, avatarUrl,
+        emailNotifications, pushNotifications, autoPlayPromos, themePreference, subscriptionTier
+    } = req.body;
+
+    try {
+        const updatedUser = await prisma.user.update({
+            where: { id: req.user.id },
+            data: {
+                name,
+                businessName,
+                phoneNumber,
+                fax,
+                city,
+                state,
+                country,
+                postcode,
+                avatarUrl,
+                emailNotifications: emailNotifications !== undefined ? emailNotifications : undefined,
+                pushNotifications: pushNotifications !== undefined ? pushNotifications : undefined,
+                autoPlayPromos: autoPlayPromos !== undefined ? autoPlayPromos : undefined,
+                themePreference,
+                subscriptionTier
+            }
+        });
+
+        res.status(200).json({
+            status: "success",
+            data: {
+                user: {
+                    id: updatedUser.id,
+                    name: updatedUser.name,
+                    email: updatedUser.email,
+                    role: updatedUser.role,
+                    businessName: updatedUser.businessName,
+                    phoneNumber: updatedUser.phoneNumber,
+                    fax: updatedUser.fax,
+                    city: updatedUser.city,
+                    state: updatedUser.state,
+                    country: updatedUser.country,
+                    postcode: updatedUser.postcode,
+                    avatarUrl: updatedUser.avatarUrl,
+                    emailNotifications: updatedUser.emailNotifications,
+                    pushNotifications: updatedUser.pushNotifications,
+                    autoPlayPromos: updatedUser.autoPlayPromos,
+                    themePreference: updatedUser.themePreference,
+                    subscriptionTier: updatedUser.subscriptionTier
+                }
+            }
+        });
+    } catch (error) {
+        console.error('Error updating profile:', error);
+        res.status(500).json({ error: error.message || "Failed to update profile" });
+    }
+};
+
+export { register, login, logout, changePassword, updateProfile };

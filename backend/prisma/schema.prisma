@@ -24,6 +24,23 @@ model User {
   role      Role     @default(USER)
   createdAt DateTime @default(now())
 
+  // New Profile Fields
+  businessName String?
+  phoneNumber  String?
+  fax          String?
+  city         String?
+  state        String?
+  country      String?
+  postcode     String?
+  avatarUrl    String?
+
+  // Preferences & Notifications
+  emailNotifications Boolean @default(true)
+  pushNotifications  Boolean @default(true)
+  autoPlayPromos     Boolean @default(true)
+  themePreference    String  @default("dark")
+  subscriptionTier   String  @default("Free")
+
   // Relations
   movies        Movie[]         @relation("MovieCreator")
   watchListItem WatchlistItem[]
