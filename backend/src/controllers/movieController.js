@@ -37,7 +37,18 @@ const getMovieById = async (req, res) => {
 
 /** POST /movies  — protected */
 const createMovie = async (req, res) => {
-    const { title, overview, releaseYear, genres, runtime, posterUrl } = req.body;
+    const { 
+        title, 
+        overview, 
+        releaseYear, 
+        genres, 
+        runtime, 
+        posterUrl,
+        backdropUrl,
+        trailerUrl,
+        rating,
+        isFeatured 
+    } = req.body;
 
     if (!title || !releaseYear) {
         return res
@@ -53,6 +64,10 @@ const createMovie = async (req, res) => {
             genres: genres || [],
             runtime: runtime ? parseInt(runtime) : null,
             posterUrl: posterUrl || null,
+            backdropUrl: backdropUrl || null,
+            trailerUrl: trailerUrl || null,
+            rating: rating ? parseFloat(rating) : 0.0,
+            isFeatured: isFeatured === true || isFeatured === "true",
             createdBy: req.user.id,
         },
     });
@@ -71,7 +86,18 @@ const updateMovie = async (req, res) => {
             .json({ error: "Not authorized to update this movie" });
     }
 
-    const { title, overview, releaseYear, genres, runtime, posterUrl } = req.body;
+    const { 
+        title, 
+        overview, 
+        releaseYear, 
+        genres, 
+        runtime, 
+        posterUrl,
+        backdropUrl,
+        trailerUrl,
+        rating,
+        isFeatured 
+    } = req.body;
 
     const updated = await prisma.movie.update({
         where: { id: req.params.id },
@@ -82,6 +108,10 @@ const updateMovie = async (req, res) => {
             ...(genres !== undefined && { genres }),
             ...(runtime !== undefined && { runtime: runtime ? parseInt(runtime) : null }),
             ...(posterUrl !== undefined && { posterUrl }),
+            ...(backdropUrl !== undefined && { backdropUrl }),
+            ...(trailerUrl !== undefined && { trailerUrl }),
+            ...(rating !== undefined && { rating: parseFloat(rating) }),
+            ...(isFeatured !== undefined && { isFeatured: isFeatured === true || isFeatured === "true" }),
         },
     });
 

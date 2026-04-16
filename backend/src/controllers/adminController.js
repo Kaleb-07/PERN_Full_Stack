@@ -179,7 +179,18 @@ const getAdminMovies = async (req, res) => {
 
 /** POST /admin/movies */
 const createAdminMovie = async (req, res) => {
-    const { title, overview, releaseYear, genres, runtime, posterUrl } = req.body;
+    const { 
+        title, 
+        overview, 
+        releaseYear, 
+        genres, 
+        runtime, 
+        posterUrl,
+        backdropUrl,
+        trailerUrl,
+        rating,
+        isFeatured 
+    } = req.body;
 
     if (!title || !releaseYear) {
         return res
@@ -195,6 +206,10 @@ const createAdminMovie = async (req, res) => {
             genres: Array.isArray(genres) ? genres : (genres ? genres.split(",").map((g) => g.trim()) : []),
             runtime: runtime ? parseInt(runtime) : null,
             posterUrl: posterUrl || null,
+            backdropUrl: backdropUrl || null,
+            trailerUrl: trailerUrl || null,
+            rating: rating ? parseFloat(rating) : 0.0,
+            isFeatured: isFeatured === true || isFeatured === "true",
             createdBy: req.user.id,
         },
     });

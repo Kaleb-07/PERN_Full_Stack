@@ -4,7 +4,13 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import "dotenv/config";
 
 const connectionString = process.env.DATABASE_URL;
-const pool = new Pool({ connectionString });
+const pool = new Pool({ 
+    connectionString,
+    ssl: {
+        rejectUnauthorized: false, // Required for some hosted postgres providers like Neon if CA is not provided
+    },
+    connectionTimeoutMillis: 15000, // Increase timeout to 15s to handle Neon project wake-ups
+});
 const adapter = new PrismaPg(pool);
 
 const prisma = new PrismaClient({

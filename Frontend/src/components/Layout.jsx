@@ -1,14 +1,16 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom'
 import Sidebar from './Sidebar'
-import Header from './Header'
 
 const Layout = ({ children }) => {
+  const location = useLocation()
+  const isHome = location.pathname === '/'
+
   return (
     <div className="dashboard-layout">
       <Sidebar />
       <div className="main-container">
-        <Header />
-        <main className="main-content">
+        <main className={`main-content ${!isHome ? 'page-content' : ''}`}>
           {children}
         </main>
       </div>

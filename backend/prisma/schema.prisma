@@ -35,9 +35,13 @@ model Movie {
   title       String
   overview    String?
   releaseYear Int
-  genres      String[]        @default([]) // ✅ must be "genres"
+  genres      String[]        @default([])
   runtime     Int?
   posterUrl   String?
+  backdropUrl String?         // ✅ For cinematic hero banner
+  trailerUrl  String?         // ✅ For trailer player
+  rating      Float?          @default(0.0) // ✅ Dynamic rating
+  isFeatured  Boolean         @default(false) // ✅ Explicitly pick hero movie
   createdBy   String
   updatedAt   DateTime        @updatedAt
   creator     User            @relation("MovieCreator", fields: [createdBy], references: [id], onDelete: Cascade)

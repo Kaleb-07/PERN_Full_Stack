@@ -1,27 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
 :root {
-  /* Colors - Professional Palette */
+  /* Colors - Awesome Premium Palette */
   --primary: #6366f1;
-  --primary-glow: rgba(99, 102, 241, 0.15);
-  --bg-sidebar: #0f172a;
-  --bg-main: #020617;
-  --bg-card: rgba(30, 41, 59, 0.4);
-  --border: rgba(255, 255, 255, 0.08);
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-  --success: #22c55e;
-  --warning: #f59e0b;
-  --danger: #ef4444;
+  --primary-light: #e0e7ff;
+  --accent: #6366f1;
   
-  /* Layout */
-  --sidebar-width: 280px;
-  --sidebar-collapsed-width: 80px;
-  --header-height: 72px;
+  --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  --gradient-hero: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 40%, transparent 100%);
   
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --bg-main: #f0f2f9; /* Soft Lavender Grey */
+  --bg-sidebar: #ffffff;
+  --bg-surface: #ffffff;
+  --bg-card: #ffffff;
+  
+  --border: rgba(0, 0, 0, 0.04);
+  --border-glass: rgba(255, 255, 255, 0.2);
+  
+  --text-primary: #18181b;
+  --text-secondary: #52525b;
+  --text-muted: #a1a1aa;
+  
+  /* Layout & Liquid Geometry */
+  --sidebar-width: 80px;
+  --right-panel-width: 350px;
+  --bg-sidebar: #6366f1; /* Premium Indigo */
+  --radius-squircle: 2.5rem;
+  
+  /* Shadows - Elite Polish */
+  --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 20px 40px rgba(0, 0, 0, 0.06);
+  --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.15);
 }
 
 * {
@@ -30,14 +39,23 @@
   box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
   background-color: var(--bg-main);
   color: var(--text-primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
 }
+
+h1, h2, h3, h4, .h1, .h2, .logo {
+  font-family: 'Outfit', sans-serif;
+}
+
 
 /* Glassmorphism Refined */
 .glass-panel {

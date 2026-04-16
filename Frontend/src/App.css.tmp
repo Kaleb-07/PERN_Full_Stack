@@ -1,0 +1,77 @@
+
+/* 💎 LUXURY HEADER NAVIGATION */
+.home-header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+  z-index: 40;
+}
+
+.filter-tabs-container {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 0.5rem;
+  border-radius: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 10px 30px -10px rgba(0, 0, 0, 0.08);
+}
+
+.filter-tabs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+}
+
+.filter-tab {
+  position: relative;
+  padding: 0.75rem 2rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  outline: none !important;
+}
+
+.tab-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  position: relative;
+  z-index: 5;
+  transition: color 0.3s;
+}
+
+.filter-tab.active .tab-label {
+  color: #1e293b;
+}
+
+.filter-tab:hover .tab-label {
+  color: #1e293b;
+}
+
+/* THE SLIDING PILL */
+.active-pill-background {
+  position: absolute;
+  inset: 0;
+  background: #ffffff;
+  border-radius: 1.5rem;
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.05),
+    0 1px 3px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+/* Micro-haptic click effect */
+.filter-tab:active {
+  transform: scale(0.95);
+}

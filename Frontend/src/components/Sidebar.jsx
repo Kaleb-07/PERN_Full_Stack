@@ -1,103 +1,108 @@
-import React from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { motion, AnimatePresence } from 'framer-motion'
 import { 
-  LayoutDashboard, 
-  Bookmark, 
-  Film, 
-  Settings, 
-  LogOut,
-  ChevronLeft,
+  Home,
+  LayoutGrid,
+  User,
+  Bell,
+  Calendar,
+  MessageSquare,
   Search,
-  PlusSquare,
-  Shield
+  Settings,
+  LogOut,
+  Film,
+  Zap,
+  ChevronLeft,
+  ChevronRight,
+  Menu
 } from 'lucide-react'
 
 import { useAuth } from '../context/AuthContext'
 
 const Sidebar = () => {
+  const [isCollapsed, setIsCollapsed] = useState(true)
   const location = useLocation()
-  const { logout, user } = useAuth()
+  const navigate = useNavigate()
+  const { logout } = useAuth()
   const isActive = (path) => location.pathname === path
 
   const navItems = [
-    { name: 'Home', icon: <LayoutDashboard size={20} />, path: '/' },
-    { name: 'My Watchlist', icon: <Bookmark size={20} />, path: '/watchlist' },
-    { name: 'Browse Movies', icon: <Search size={20} />, path: '/browse' },
+    { name: 'Home', icon: <Home size={22} />, path: '/' },
+    { name: 'Browse', icon: <LayoutGrid size={22} />, path: '/browse' },
+    { name: 'Profile', icon: <User size={22} />, path: '/profile' },
+    { name: 'Special', icon: <Zap size={22} />, path: '/special', hasDot: true },
+    { name: 'Alerts', icon: <Bell size={22} />, path: '/alerts' },
+    { name: 'Schedule', icon: <Calendar size={22} />, path: '/schedule' },
+    { name: 'Chat', icon: <MessageSquare size={22} />, path: '/chat' },
   ]
 
   return (
-    <aside className="sidebar glass-panel">
+    <aside className={`sidebar ${isCollapsed ? 'collapsed' : ''}`}>
       <div className="sidebar-header">
-        <div className="logo">
-          <Film className="logo-icon" size={28} />
-          <span className="logo-text">Cine<span>Admin</span></span>
+        <div className="logo cursor-pointer" onClick={() => setIsCollapsed(!isCollapsed)}>
+          <Film className="logo-icon-adaptive" size={28} />
+          {!isCollapsed && (
+            <motion.span 
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="logo-text-adaptive ml-3"
+            >
+              Fil<span>Screen</span>
+            </motion.span>
+          )}
         </div>
       </div>
 
       <nav className="sidebar-nav">
-        <div className="nav-group">
-          <p className="nav-label">Main Menu</p>
-          {navItems.map((item) => (
-            <Link 
-              key={item.name} 
-              to={item.path} 
-              className={`nav-item ${isActive(item.path) ? 'active' : ''}`}
-            >
-              {item.icon}
-              <span>{item.name}</span>
-            </Link>
-          ))}
-          {user?.role === 'ADMIN' && (
-            <>
+        <div className="liquid-segment">
+          <div className="nav-main">
+            {navItems.map((item) => (
               <Link 
-                to="/add" 
-                className={`nav-item ${isActive('/add') ? 'active' : ''}`}
+                key={item.name} 
+                to={item.path} 
+                className={`nav-item ${isActive(item.path) ? 'active' : ''}`}
+                title={isCollapsed ? item.name : ''}
               >
-                <PlusSquare size={20} />
-                <span>Add Movie</span>
+                <div className="icon-wrapper">
+                  {item.icon}
+                  {item.hasDot && <span className="status-dot"></span>}
+                </div>
+                {!isCollapsed && (
+                  <motion.span 
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="nav-label"
+                  >
+                    {item.name}
+                  </motion.span>
+                )}
               </Link>
-              <Link 
-                to="/admin" 
-                className={`nav-item admin-link ${location.pathname.startsWith('/admin') ? 'active' : ''}`}
-              >
-                <Shield size={20} />
-                <span>Admin Dashboard</span>
-              </Link>
-            </>
-          )}
-        </div>
+            ))}
+          </div>
 
-        <div className="nav-group">
-          <p className="nav-label">General</p>
-          <Link to="/settings" className={`nav-item ${isActive('/settings') ? 'active' : ''}`}>
-            <Settings size={20} />
-            <span>Settings</span>
-          </Link>
-          <button onClick={logout} className="nav-item logout-btn">
-            <LogOut size={20} />
-            <span>Sign Out</span>
-          </button>
+          <div className="nav-footer">
+            <Link to="/settings" className={`nav-item ${isActive('/settings') ? 'active' : ''}`} title="Settings">
+               <div className="icon-wrapper"><Settings size={22} /></div>
+               {!isCollapsed && <span className="nav-label">Settings</span>}
+            </Link>
+            
+            <button onClick={logout} className="nav-item logout-btn" title="Logout">
+              <div className="icon-wrapper"><LogOut size={22} /></div>
+              {!isCollapsed && <span className="nav-label">Logout</span>}
+            </button>
+          </div>
         </div>
       </nav>
 
-      <div className="sidebar-footer">
-        {user && (
-          <div className="user-profile-mini">
-            <div className={`avatar ${user.role === 'ADMIN' ? 'admin-avatar' : ''}`}>
-              {user.name?.[0] || 'U'}
-            </div>
-            <div className="user-info">
-              <p className="user-name">{user.name}</p>
-              <div className="role-tag-mini">
-                <div className={`status-dot ${user.role === 'ADMIN' ? 'admin' : 'user'}`}></div>
-                <p className="user-role">{user.role === 'ADMIN' ? 'Administrator' : 'Premium Member'}</p>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
     </aside>
   )
 }
 
+
+
 export default Sidebar
+
+
+
+
