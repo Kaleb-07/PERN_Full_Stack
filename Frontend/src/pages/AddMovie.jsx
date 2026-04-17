@@ -44,7 +44,7 @@ const AddMovie = () => {
 
     setLoading(true)
     try {
-      // Process genres from comma-separated string to array
+      // Process genres from comma-separated String to Array
       const genresArray = formData.genres 
         ? formData.genres.split(',').map(g => g.trim()).filter(g => g !== '')
         : []
