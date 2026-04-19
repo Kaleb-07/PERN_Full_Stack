@@ -128,7 +128,7 @@ const Home = () => {
     </div>
   )
 
-  // Find the explicitly featured movie, or fallback to the most recent one
+  // Find the explicitly featured moviees or fallback to the most recent one
   const featuredMovie = movies.find(m => m.isFeatured) || movies[0] || {
     title: 'Featured Cinema',
     overview: 'Discover the latest releases and curated collections.',
