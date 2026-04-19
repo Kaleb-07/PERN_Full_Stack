@@ -170,7 +170,7 @@ const Home = () => {
         </header>
 
 
-        {/* Cinematic Hero Banner v4 */}
+        {/* Cinematic Hero Banner V4 */}
         <section className="hero-banner">
           <img
             src={featuredMovie.backdropUrl || featuredMovie.posterUrl}
