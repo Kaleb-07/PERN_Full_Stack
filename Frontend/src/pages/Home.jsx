@@ -18,6 +18,7 @@ import { motion } from 'framer-motion'
 import api from '../services/api'
 import toast from 'react-hot-toast'
 import { useAuth } from '../context/AuthContext'
+import { useWatchlist } from '../context/WatchlistContext'
 import MovieRow from '../components/MovieRow'
 
 const MOCK_MOVIES = [
@@ -109,17 +110,14 @@ const MOCK_MOVIES = [
   }
 ];
 
-import { useWatchlist } from '../context/WatchlistContext'
-
 const Home = () => {
   const { user } = useAuth()
-  const { watchlist, addToWatchlist } = useWatchlist()
+  const { addToWatchlist } = useWatchlist()
   const navigate = useNavigate()
   const [movies, setMovies] = useState(MOCK_MOVIES)
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('New')
-  // Removed local watchlist state as it's now global
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -158,7 +156,7 @@ const Home = () => {
     </div>
   )
 
-  // Find the explicitly featured movie, or fallback to the most recent one
+  // Find the explicitly featured moviees or fallback to the most recent one
   const featuredMovie = movies.find(m => m.isFeatured) || movies[0] || {
     title: 'Featured Cinema',
     overview: 'Discover the latest releases and curated collections.',
@@ -251,6 +249,7 @@ const Home = () => {
                     <Star size={14} className="fill-yellow-400 text-yellow-400" />
                   </div>
                 </div>
+
 
                 {/* Middle/Bottom: Info & Actions */}
                 <div className="hero-bottom-area">
