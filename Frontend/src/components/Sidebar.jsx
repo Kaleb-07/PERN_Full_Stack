@@ -15,7 +15,8 @@ import {
   Zap,
   ChevronLeft,
   ChevronRight,
-  Menu
+  Menu,
+  ShieldCheck
 } from 'lucide-react'
 
 import { useAuth } from '../context/AuthContext'
@@ -36,7 +37,7 @@ const Sidebar = () => {
   ]
 
   const adminItems = [
-    { name: 'Admin', icon: <User size={22} />, path: '/admin' }
+    { name: 'Admin Portal', icon: <ShieldCheck size={22} />, path: '/admin' }
   ]
 
   return (

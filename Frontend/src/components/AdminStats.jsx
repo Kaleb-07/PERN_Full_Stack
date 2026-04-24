@@ -7,27 +7,27 @@ const AdminStats = ({ stats }) => {
 
   const statCards = [
     {
-      title: 'Total Users',
+      title: 'Total Community',
       value: stats.totalUsers,
-      icon: <Users size={24} />,
+      icon: <Users size={28} />,
       delay: 0.1
     },
     {
-      title: 'Total Movies',
+      title: 'Library Assets',
       value: stats.totalMovies,
-      icon: <Film size={24} />,
+      icon: <Film size={28} />,
       delay: 0.2
     },
     {
-      title: 'Watchlist Items',
+      title: 'Global Saves',
       value: stats.totalWatchlistItems,
-      icon: <Bookmark size={24} />,
+      icon: <Bookmark size={28} />,
       delay: 0.3
     },
     {
-      title: 'New Users (Week)',
+      title: 'Growth (7d)',
       value: stats.newUsersThisWeek,
-      icon: <Activity size={24} />,
+      icon: <Activity size={28} />,
       delay: 0.4
     }
   ];
