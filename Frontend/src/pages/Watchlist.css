@@ -1,0 +1,108 @@
+.watchlist-gallery-page {
+  padding: 3rem 4rem;
+  min-height: 100vh;
+}
+
+.watchlist-hero-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 4rem;
+  gap: 2rem;
+}
+
+.watchlist-title-group h1 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 900;
+  font-size: 3.5rem;
+  color: #0f172a;
+  margin-bottom: 0.5rem;
+  letter-spacing: -2px;
+  line-height: 1;
+}
+
+.watchlist-title-group h1 span {
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.watchlist-title-group p {
+  font-size: 1.1rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.watchlist-badge-premium {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 1.25rem;
+  background: rgba(99, 102, 241, 0.1);
+  color: #6366f1;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1.5rem;
+}
+
+.luxury-loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5rem;
+}
+
+.watchlist-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8rem 2rem;
+  text-align: center;
+}
+
+.empty-glow-icon {
+  width: 120px;
+  height: 120px;
+  background: rgba(99, 102, 241, 0.05);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  color: #6366f1;
+  box-shadow: 0 0 50px rgba(99, 102, 241, 0.1);
+}
+
+.watchlist-empty-state h3 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 1rem;
+}
+
+.watchlist-empty-state p {
+  color: #64748b;
+  max-width: 400px;
+  margin-bottom: 2rem;
+}
+
+/* Specific button style for empty state */
+.hero-watch-btn.mt-8 {
+  margin-top: 2rem;
+}
+
+.elite-card-wishlist.active {
+  background: #ff4757;
+  color: white;
+  opacity: 1;
+  transform: translateY(0) rotate(0deg);
+}
+
+.elite-card-wishlist.active:hover {
+  background: #ff2e44;
+  transform: scale(1.1) rotate(-8deg) !important;
+}

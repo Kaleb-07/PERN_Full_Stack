@@ -48,6 +48,7 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     const { email, password } = req.body;
+    console.log(`Login attempt for email: ${email}`);
 
     // Check if user email exists in the table
     const user = await prisma.user.findUnique({
@@ -55,15 +56,22 @@ const login = async (req, res) => {
     });
 
     if (!user) {
+        console.log(`User not found for email: ${email}`);
         return res.status(401).json({ error: "Invalid email or password" });
     }
+
+    console.log(`User found: ${user.email}, comparing password...`);
 
     // Verify Password
     const isPasswordValid = await bcrypt.compare(password, user.password);
+    console.log(`Password comparison result: ${isPasswordValid}`);
 
     if (!isPasswordValid) {
+        console.log(`Invalid password for email: ${email}`);
         return res.status(401).json({ error: "Invalid email or password" });
     }
+
+    console.log(`Password valid, generating token...`);
 
     // Generate JWT Token for the User
     const token = generateToken(user.id, res);

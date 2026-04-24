@@ -8,6 +8,8 @@ import authRoutes from "./routes/authRoutes.js";
 import watchlistRoutes from "./routes/watchlistRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
+import scheduleRoutes from "./routes/scheduleRoutes.js";
+import chatRoutes from "./routes/chatRoutes.js";
 
 config();
 connectDB();
@@ -24,6 +26,8 @@ app.use("/auth", authRoutes);
 app.use("/watchlist", watchlistRoutes);
 app.use("/admin", adminRoutes);
 app.use("/reviews", reviewRoutes);
+app.use("/schedule", scheduleRoutes);
+app.use("/chat", chatRoutes);
 
 const server = app.listen(process.env.PORT || 5001, "0.0.0.0", () => {
     console.log(`Server running on PORT ${process.env.PORT}`);

@@ -24,17 +24,19 @@ const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(true)
   const location = useLocation()
   const navigate = useNavigate()
-  const { logout } = useAuth()
+  const { user, logout } = useAuth()
   const isActive = (path) => location.pathname === path
 
   const navItems = [
     { name: 'Home', icon: <Home size={22} />, path: '/' },
     { name: 'Browse', icon: <LayoutGrid size={22} />, path: '/browse' },
-    // { name: 'Profile', icon: <User size={22} />, path: '/profile' },
-    { name: 'Special', icon: <Zap size={22} />, path: '/special', hasDot: true },
-    // { name: 'Downloads', icon: <Download size={22} />, path: '/downloads' },
+    { name: 'Watchlist', icon: <Zap size={22} />, path: '/watchlist', hasDot: true },
     { name: 'Schedule', icon: <Calendar size={22} />, path: '/schedule' },
     { name: 'Chat', icon: <MessageSquare size={22} />, path: '/chat' },
+  ]
+
+  const adminItems = [
+    { name: 'Admin', icon: <User size={22} />, path: '/admin' }
   ]
 
   return (
@@ -67,6 +69,27 @@ const Sidebar = () => {
                 <div className="icon-wrapper">
                   {item.icon}
                   {item.hasDot && <span className="status-dot"></span>}
+                </div>
+                {!isCollapsed && (
+                  <motion.span
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="nav-label"
+                  >
+                    {item.name}
+                  </motion.span>
+                )}
+              </Link>
+            ))}
+            {user?.role === 'ADMIN' && adminItems.map((item) => (
+              <Link
+                key={item.name}
+                to={item.path}
+                className={`nav-item ${isActive(item.path) ? 'active' : ''}`}
+                title={isCollapsed ? item.name : ''}
+              >
+                <div className="icon-wrapper">
+                  {item.icon}
                 </div>
                 {!isCollapsed && (
                   <motion.span

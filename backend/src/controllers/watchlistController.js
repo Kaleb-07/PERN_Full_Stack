@@ -34,13 +34,14 @@ const addToWatchlist = async (req, res) => {
             rating,
             notes,
         },
+        include: {
+            movie: true, // Crucial: Include movie data for the frontend
+        }
     });
 
     res.status(201).json({
         status: "Success",
-        data: {
-            watchlistItem,
-        },
+        data: watchlistItem,
     });
 };
 

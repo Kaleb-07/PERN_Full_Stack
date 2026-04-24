@@ -14,8 +14,10 @@ import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import api from '../services/api'
 import toast from 'react-hot-toast'
+import { useWatchlist } from '../context/WatchlistContext'
 
 const BrowseMovies = () => {
+  const { addToWatchlist } = useWatchlist()
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
@@ -45,15 +47,6 @@ const BrowseMovies = () => {
   const handleSearch = (e) => {
     if (e) e.preventDefault()
     fetchMovies()
-  }
-
-  const addToWatchlist = async (movieId) => {
-    try {
-      await api.post('/watchlist', { movieId, status: 'PLANNED' })
-      toast.success('Added to watchlist!')
-    } catch (error) {
-      toast.error('Failed to add to watchlist')
-    }
   }
 
   const containerVariants = {
