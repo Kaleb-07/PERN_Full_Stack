@@ -90,7 +90,7 @@ const AdminDashboard = () => {
         </button>
       </nav>
 
-      {/* DYNAMIC CONTENTs */}
+      {/* DYNAMIC CONTENTS */}
       <main className="admin-content">
         <AnimatePresence mode="wait">
           <motion.div 
