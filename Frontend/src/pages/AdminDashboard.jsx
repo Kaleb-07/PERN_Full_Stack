@@ -38,7 +38,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-dashboard-container">
-      {/* --- ELITE HEADER */}
+      {/* ELITE HEADER */}
       <header className="admin-header">
         <div className="admin-header-title">
           <motion.h1
