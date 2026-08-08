@@ -68,7 +68,7 @@ const AdminDashboard = () => {
         </motion.div>
       </header>
 
-      {/* --- LUXURY TABS --- */}
+      {/* --- LUXURY TABS */}
       <nav className="admin-tabs">
         <button 
           className={`admin-tab-btn ${activeTab === 'overview' ? 'active' : ''}`}
