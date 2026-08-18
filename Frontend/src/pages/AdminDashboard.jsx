@@ -38,7 +38,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-dashboard-container">
-      {/* ELITE HEADER */}
+      {/* ELITE HEADERS */}
       <header className="admin-header">
         <div className="admin-header-title">
           <motion.h1
@@ -90,7 +90,7 @@ const AdminDashboard = () => {
         </button>
       </nav>
 
-      {/* DYNAMIC CONTENTS */}
+      {/* DYNAMIC-CONTENTS */}
       <main className="admin-content">
         <AnimatePresence mode="wait">
           <motion.div 
