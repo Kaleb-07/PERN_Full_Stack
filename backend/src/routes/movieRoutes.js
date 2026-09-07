@@ -14,7 +14,7 @@ const router = express.Router();
 router.get("/", getAllMovies);
 router.get("/:id", getMovieById);
 
-// Protected routes
+// The Protected routes
 router.post("/", authMiddleware, createMovie);
 router.put("/:id", authMiddleware, updateMovie);
 router.delete("/:id", authMiddleware, deleteMovie);
