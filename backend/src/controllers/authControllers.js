@@ -20,7 +20,7 @@ const register = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Create User
+    // Create Users
     const user = await prisma.user.create({
         data: {
             name,
@@ -29,7 +29,7 @@ const register = async (req, res) => {
         },
     });
 
-    // Generate JWT Token
+    // Generate The JWT Token
     const token = generateToken(user.id, res);
 
     res.status(201).json({
