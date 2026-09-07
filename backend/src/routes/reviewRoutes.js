@@ -11,7 +11,7 @@ const router = express.Router();
 // The Public View reviews for a movie
 router.get("/movie/:movieId", getMovieReviews);
 
-// Protected: Post/Delete reviews
+// The Protected:- Post/Delete reviews
 router.post("/", authMiddleware, addReview);
 router.delete("/:id", authMiddleware, deleteReview);
 
