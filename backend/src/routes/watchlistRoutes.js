@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.use(authMiddleware);
 
-// Get my watchlist
+// Get my watchlists
 router.get("/", getMyWatchlist);
 
 // adding API
