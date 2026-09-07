@@ -10,7 +10,7 @@ import {
 
 const router = express.Router();
 
-// Public routes
+// The Public routes
 router.get("/", getAllMovies);
 router.get("/:id", getMovieById);
 
