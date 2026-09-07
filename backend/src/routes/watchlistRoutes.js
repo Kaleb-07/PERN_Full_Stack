@@ -16,7 +16,7 @@ router.use(authMiddleware);
 // Get my watchlists
 router.get("/", getMyWatchlist);
 
-// adding API
+// To Adding API
 router.post("/", addToWatchlist);
 router.post("/", validateRequest(addToWatchlistSchema), addToWatchlist);
 
