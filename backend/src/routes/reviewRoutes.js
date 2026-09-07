@@ -8,7 +8,7 @@ import {
 
 const router = express.Router();
 
-// Public: View reviews for a movie
+// The Public View reviews for a movie
 router.get("/movie/:movieId", getMovieReviews);
 
 // Protected: Post/Delete reviews
