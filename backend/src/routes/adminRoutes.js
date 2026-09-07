@@ -16,7 +16,7 @@ const router = express.Router();
 // All routes below require: valid JWT + ADMIN role
 router.use(authMiddleware, adminMiddleware);
 
-// Platform statistics
+// The Platform statistics
 router.get("/stats", getStats);
 
 // The User management
