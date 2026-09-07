@@ -19,7 +19,7 @@ router.use(authMiddleware, adminMiddleware);
 // Platform statistics
 router.get("/stats", getStats);
 
-// User management
+// The User management
 router.get("/users", getAllUsers);
 router.patch("/users/:id/role", updateUserRole);
 router.delete("/users/:id", deleteUser);
