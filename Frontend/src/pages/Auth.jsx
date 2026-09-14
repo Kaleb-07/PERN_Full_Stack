@@ -1,4 +1,4 @@
-// Professional Auth Redesign
+// The Professional Auth Redesign
 import React, { useState, useEffect } from 'react'
 import { Mail, Lock, User, ArrowRight, Loader2, Film, Sparkles } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
