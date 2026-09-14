@@ -45,7 +45,7 @@ const Auth = () => {
           className="auth-bg-img"
         />
 
-        {/* Repositioned Mini Floating Cards */}
+        {/* The Repositioned Mini Floating Cards */}
         <div className="floating-elements-container">
           <div className="floating-card float-1 glass-panel">
             <img src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?w=200&q=80" alt="Matrix Poster" />
