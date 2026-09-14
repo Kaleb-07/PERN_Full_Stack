@@ -46,7 +46,7 @@ const Schedule = () => {
     }
   }
 
-  // Generate current week days
+  // The Generate current week days
   const getWeekDays = () => {
     const days = []
     const today = new Date()
