@@ -116,7 +116,7 @@ const BrowseMovies = () => {
         </div>
       </motion.div>
 
-      {/* CONTENT AREA */}
+      {/* THE CONTENT AREA */}
       <AnimatePresence mode="wait">
         {loading ? (
           <motion.div 
