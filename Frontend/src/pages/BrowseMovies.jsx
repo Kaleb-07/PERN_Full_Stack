@@ -39,7 +39,7 @@ const BrowseMovies = () => {
     } catch (error) {
       toast.error('Failed to load movies')
     } finally {
-      // Small delay for smooth transition feel
+      // the Small delay for smooth transition feel
       setTimeout(() => setLoading(false), 400)
     }
   }
